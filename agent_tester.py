@@ -77,7 +77,6 @@ def tool_test_loop(agent_executor, test_cases):
 
 # --- ANA ÇALIŞTIRMA BLOĞU ---
 if __name__ == "__main__":
-
     Arxivangelist = build_agent()
     """    raw_input_string = (
         f"image_path='{os.path.abspath('/home/mbaloglu/langchain_llm/cca530fc-4052-43b2-b130-b30968d8aa44.png')}', "

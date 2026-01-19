@@ -109,7 +109,6 @@ def transcribe_audio_whisper(audio_path: str) -> str:
 
 
 def download_audio_from_youtube(url, output_path="audio.mp3"):
-
     subprocess.run(
         [
             "yt-dlp",
