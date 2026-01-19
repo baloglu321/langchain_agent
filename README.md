@@ -24,61 +24,51 @@
 ## 📐 System Architecture
 
 ```mermaid
-graph TB
-    subgraph "User Interface Layer"
-        UI[Gradio Web UI]
-        API[FastAPI Endpoints]
+graph LR
+    subgraph UI["🖥️ User Interface"]
+        Web[Gradio Web UI]
     end
 
-    subgraph "Agent Core"
-        Agent[ReAct Agent Executor]
-        LLM[ChatOllama<br/>Gemma 3 27B]
-        Prompt[System Prompt<br/>ReAct Template]
+    subgraph Core["🤖 Agent Core"]
+        Agent[ReAct Agent]
+        LLM[Ollama<br/>Gemma 3 27B]
     end
 
-    subgraph "Tool Registry"
-        Weather[Weather API Tool]
-        WebSearch[Web Search<br/>DuckDuckGo]
-        Wiki[Wikipedia Search]
-        Arxiv[Academic Search<br/>ArXiv]
-        Vision[Image Captioning<br/>Multimodal]
-        Audio[Audio Transcription<br/>Whisper]
-        YT[YouTube Downloader<br/>yt-dlp]
-        File[File Downloader]
-        Python[Python REPL]
+    subgraph Tools["🛠️ Tools"]
+        Search[Web & Academic<br/>Search]
+        Media[Audio/Video<br/>Processing]
+        Vision[Image<br/>Analysis]
+        Code[Python<br/>Executor]
+        API[Weather &<br/>File APIs]
     end
 
-    subgraph "External Services"
-        Ollama[Ollama Server<br/>Cloudflare Tunnel]
-        WeatherAPI[WeatherStack API]
-        HF[Hugging Face Hub]
+    subgraph External["☁️ Services"]
+        OllamaServer[Ollama Server]
+        APIs[External APIs]
     end
 
-    UI -->|User Query| Agent
-    API -->|OAuth Profile| Agent
-    Agent -->|Prompt| LLM
-    LLM -->|Response| Agent
-    Prompt -.->|Template| Agent
+    Web -->|Query| Agent
+    Agent <-->|Reasoning| LLM
+    Agent -->|Select Tool| Search
+    Agent -->|Select Tool| Media
+    Agent -->|Select Tool| Vision
+    Agent -->|Select Tool| Code
+    Agent -->|Select Tool| API
     
-    Agent -->|Tool Selection| Weather
-    Agent -->|Tool Selection| WebSearch
-    Agent -->|Tool Selection| Wiki
-    Agent -->|Tool Selection| Arxiv
-    Agent -->|Tool Selection| Vision
-    Agent -->|Tool Selection| Audio
-    Agent -->|Tool Selection| YT
-    Agent -->|Tool Selection| File
-    Agent -->|Tool Selection| Python
+    LLM <-->|API Call| OllamaServer
+    Vision -.->|Multimodal| OllamaServer
+    API -->|Request| APIs
 
-    LLM <-->|API Calls| Ollama
-    Weather -->|API Request| WeatherAPI
-    Vision -->|Multimodal API| Ollama
-    File -->|Download| HF
-
-    style Agent fill:#4CAF50,stroke:#2E7D32,color:#fff
-    style LLM fill:#2196F3,stroke:#1565C0,color:#fff
-    style UI fill:#FF9800,stroke:#E65100,color:#fff
-    style Ollama fill:#9C27B0,stroke:#6A1B9A,color:#fff
+    style Agent fill:#4CAF50,stroke:#2E7D32,stroke-width:3px,color:#fff
+    style LLM fill:#2196F3,stroke:#1565C0,stroke-width:3px,color:#fff
+    style Web fill:#FF9800,stroke:#E65100,stroke-width:3px,color:#fff
+    style OllamaServer fill:#9C27B0,stroke:#6A1B9A,stroke-width:3px,color:#fff
+    style Search fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    style Media fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    style Vision fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    style Code fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    style API fill:#607D8B,stroke:#37474F,stroke-width:2px,color:#fff
+    style APIs fill:#795548,stroke:#5D4037,stroke-width:2px,color:#fff
 ```
 
 ---
